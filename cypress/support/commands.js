@@ -31,7 +31,7 @@ Cypress.Commands.add('openRegisterPage', () => {
 });
 
 Cypress.Commands.add('findById', (id) => {
-  cy.get(`#${id}`);
+  return cy.get(`#${id}`);
 });
 
 Cypress.Commands.add('selectDate', (day, monthIndex, year) => {

@@ -2,7 +2,12 @@ const { faker } = require('@faker-js/faker');
 
 function generateUser() {
   const sex = faker.person.sexType();
-  const firstName = faker.person.firstName(sex);
+  let firstName;
+  if (sex === 'male' || sex === 'female') {
+    firstName = faker.person.firstName(sex);
+  } else if (sex === 'other') {
+    firstName = faker.person.firstName();
+  }
   const lastName = faker.person.lastName();
   const email = faker.internet.email({ firstName, lastName });
   const first = '0';
