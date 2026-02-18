@@ -31,13 +31,20 @@ describe('Student Registration page', () => {
     };
     const selectorHobby = hobbiesMap[hobby];
     const selectorSex = genderMap[sex];
+    if (!selectorSex) {
+      throw new Error(`Unknown sex value from generator: "${sex}". Expected one of: ${Object.keys(genderMap).join(', ')}`);
+    }
+    if (!selectorHobby) {
+      throw new Error(`Unknown hobby value from generator: "${hobby}". Expected one of: ${Object.keys(hobbiesMap).join(', ')}`);
+    }
 
     cy.contains('h5', 'Student Registration Form');
 
     cy.findById('firstName').type(firstName);
     cy.findById('lastName').type(lastName);
     cy.findById('userEmail').type(email);
-    cy.get(selectorSex).check();
+    // eslint-disable-next-line cypress/no-force
+    cy.get(selectorSex).check({ force: true });
     cy.findById('userNumber').type(phone);
     cy.selectDate('14', '4', '2012');
     cy.findById('subjectsInput').click();
@@ -47,7 +54,8 @@ describe('Student Registration page', () => {
       .contains('Maths')
       .click();
     cy.get('.subjects-auto-complete__multi-value').should('contain', 'Maths');
-    cy.get(selectorHobby).check();
+    // eslint-disable-next-line cypress/no-force
+    cy.get(selectorHobby).check({ force: true });
     cy.findById('currentAddress').type(address);
 
     cy.findById('state').click();
